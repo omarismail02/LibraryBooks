@@ -1,33 +1,64 @@
 ﻿using LibraryBooks;
 using System;
 
-namespace Hello
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var library = new Library();
+
+        while (true)
         {
-            var library = new Library();
+            Console.WriteLine("\nLibrary Menu:");
+            Console.WriteLine("1. Add a new book");
+            Console.WriteLine("2. Borrow a book");
+            Console.WriteLine("3. Return a book");
+            Console.WriteLine("4. Display all books");
+            Console.WriteLine("5. Exit");
+            Console.Write("Enter your choice: ");
+            var choice = Console.ReadLine();
 
-            var book1 = new Book();
-            book1.ISBN = "First";
-            book1.Title = "title of book 1 ";
-            book1.Author = "Author of book 1";
-            book1.IsAvailable = true;
+            switch (choice)
+            {
+                case "1":
+                    Console.Write("Enter ISBN: ");
+                    string isbn = Console.ReadLine();
+                    Console.Write("Enter Title: ");
+                    string title = Console.ReadLine();
+                    Console.Write("Enter Author: ");
+                    string author = Console.ReadLine();
 
-            var book2 = new Book();
-            book2.ISBN = "Two";
-            book2.Title = "title of book 2 ";
-            book2.Author = "Author of book 2";
-            book2.IsAvailable = true;
+                    var newBook = new Book
+                    {
+                        ISBN = isbn,
+                        Title = title,
+                        Author = author,
+                        IsAvailable = true
+                    };
 
-            library.AddBook(book1);
-            library.BorrowBook("First");
-            library.ReturnBook("First");
-
-            library.AddBook(book2);
-            library.BorrowBook("Two");
-            library.DisplayBooks();
+                    library.AddBook(newBook);
+                    Console.WriteLine("Book added successfully!");
+                    break;
+                case "2":
+                    Console.Write("Enter ISBN of the book to borrow: ");
+                    string borrowIsbn = Console.ReadLine();
+                    library.BorrowBook(borrowIsbn);
+                    break;
+                case "3":
+                    Console.Write("Enter ISBN of the book to return: ");
+                    string returnIsbn = Console.ReadLine();
+                    library.ReturnBook(returnIsbn);
+                    break;
+                case "4":
+                    library.DisplayBooks();
+                    break;
+                case "5":
+                    Console.WriteLine("Exiting...");
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    break;
+            }
         }
     }
 }
